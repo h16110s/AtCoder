@@ -1,6 +1,6 @@
 /**
     C - Snuke the Wizard	C++14 (GCC 5.4.1)
-	TLE
+	Accept
 **/
 
 #include <iostream>
@@ -9,66 +9,94 @@
 #include <set>
 using namespace std;
 
-typedef struct ROOM {
-    char name;
-    int count;
-} Room;
 
 int main(){
     long long  N, Q; 
     cin >> N >> Q;
-    vector<Room> room(N+2);
-    vector<Room> his(N+2);
-    room[0].count = 0;
-    room[0].name = ' ';
-    room[N+1].count = 0;
-    room[N+1].name = ' ';
+    vector<pair<char, int>> q;
     string s;
     cin >> s;
-
-    for(int i = 1 ; i < N + 1 ; i++){
-        room[i].name = s[i-1];
-        room[i].count = 1;
-        // cout << room[i].name;
-    }
-    // std::copy(room.begin(), room.end(), his.begin()); 
-
 
     for(int i = 0; i < Q ; i++){
         char t;
         char d;
         cin >> t >> d;
-        if(d == 'L'){
-            for(int j = 1; j < N+1 ; j++){
-                if(room[j].name == t){
-                    if(room[j].count > 0){
-                        room[j-1].count += room[j].count;
-                        room[j].count = 0;
-                    }
-                }
-            }
-        }
-        else if(d == 'R'){
-            for(int j =  N ; j > 0 ; j--){
-                if(room[j].name == t){
-                    if(room[j].count > 0){
-                        room[j+1].count += room[j].count;
-                        room[j].count = 0;
-                    }
-                }
-            }
-        }
-        // for(int i = 1 ; i < N + 1 ; i++){
-        //     cout << room[i].count << " ";
-        // }
-        // cout << endl;  
-        // std::copy(room.begin(), room.end(), his.begin());
+        int num = d == 'R' ? 1 : -1;    // Rなら1,Lなら-1 として取得
+        q.push_back(make_pair(t, num));
     }
 
-    // int ans = 0;
-    // for(int i = 1 ; i < N + 1 ; i++){
-    //     ans += room[i].count;
-    //     // cout << room[i].count << " ";
-    // }
-    cout << N - room[0].count - room[N+1].count << endl;
+    // ＝二分法＝
+
+    // 左端と右端を定義
+    int L = -1, R = N;
+    // 左側の特定
+    // R - L > 1 右端と左端が隣合わない時
+    while( R - L > 1){
+        // 中心の計算
+        int M = (L+R)/2;
+        int center = M;
+        // 左端のフラグ
+        bool leftFlag = false;
+        // 命令の回数だけ繰り返し
+        for(int i = 0; i < Q ; i++){
+            // 中心の文字列　== 命令の文字列　ならば
+            if( s[center]== q[i].first){
+                // 中心をL,Rへ動かす
+                center += q[i].second;
+            }
+            // 中心が右端にたどり着いた時は中心から右はnになるので次
+            if(center == N){
+                break;
+            }
+            // 中心が左端にたどり着いた時は中心から左は-1になるので次
+            else if(center == -1){
+                leftFlag = true;
+                break;
+            }
+        }
+        // 中心が左端に行くことがわかったら左を真ん中へ
+        if (leftFlag)  L = M;
+        // それ以外は右を動かす
+        else  R = M;
+    }
+    // 左の位置
+    int Left = L;
+
+    // 右側の特定
+    // R - L > 1 右端と左端が隣合わない時
+    L = -1, R = N;
+    while( R - L > 1){
+        // 中心の計算
+        int M = (L+R)/2;
+        int center = M;
+        // 右端のフラグ
+        bool rightFlag = false;
+        // 命令の回数だけ繰り返し
+        for(int i = 0; i < Q ; i++){
+            // 中心の文字列　== 命令の文字列　ならば
+            if( s[center] == q[i].first){
+                // 中心をL,Rへ動かす
+                center += q[i].second;
+            }
+            // 中心が左端にたどり着いた時は中心から左は-1になるので次
+            if(center == -1){
+                break;
+            }
+            // 中心が右端にたどり着いた時は中心から右はnになるので次
+            else if(center == N){
+                rightFlag = true;
+                break;
+            }
+        }
+        // 中心が右端に行くことがわかったら右を真ん中へ
+        if (rightFlag)  R = M;
+        // それ以外は左を動かす
+        else  L = M;
+    }
+    // 右の位置
+    int Right = R;
+    //左と右が重なっているもしくは入れ替わった時　-> 0
+    if ( Left >= Right ) cout << 0 << endl;
+    // そうじゃなければ右-左をした数が残りの数
+    else cout << Right - Left -1 << endl;
 }
