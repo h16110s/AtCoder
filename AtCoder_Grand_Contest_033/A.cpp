@@ -16,13 +16,11 @@ int main(){
     int H,W;
     cin >> H >> W;
     vector<vector<char>> A(H, vector<char>(W,0));
-    vector<vector<char>> An(H, vector<char>(W,0));
     vector< pair<int, int> > black;
     int count = 0;
     for(int i = 0 ; i < H  ; i++){
         for (int j = 0; j < W ; j++){
             cin >> A[i][j];
-            An[i][j] = A[i][j];
             if(A[i][j] == '#') {
                 black.push_back(make_pair(i,j));
                 count++;
@@ -79,11 +77,9 @@ int main(){
             // }
         }
         start = m;
-        // copy(An.begin(), An.end(), A.begin() );
         ans++;
     }
     cout << ans << endl;
     
- 
     return 0;
 }
