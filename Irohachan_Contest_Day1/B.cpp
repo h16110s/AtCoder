@@ -1,5 +1,6 @@
 /**
-        	C++14 (GCC 5.4.1)
+    B	ローリング・老人と海    	C++14 (GCC 5.4.1)
+    Accept
 **/
 #include <iostream>
 #include <cmath>

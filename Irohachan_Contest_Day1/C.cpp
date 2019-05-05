@@ -1,5 +1,6 @@
 /**
     C	Halcyon    	C++14 (GCC 5.4.1)
+    Accept
 **/
 #include <iostream>
 #include <cmath>
