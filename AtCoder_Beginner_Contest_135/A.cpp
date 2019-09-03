@@ -9,12 +9,13 @@
 using namespace std;
  
 int main(){
-    int N,A,B;
-    cin >> N >> A >> B;
-    if(N * A <  B){
-        cout << N * A << endl;
-    }
-    else {
-        cout <<  B << endl;
+    int A,B;
+    cin >> A >> B;
+
+    if(abs( (A + B) % 2 ) != 0){
+        cout << "IMPOSSIBLE" << endl;
+    } 
+    else{
+        cout << (A + B) / 2 << endl;
     }
 }

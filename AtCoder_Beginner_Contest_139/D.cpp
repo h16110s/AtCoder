@@ -1,3 +1,7 @@
+/**
+    D - ModSum      	C++14 (GCC 5.4.1)
+    Accepted
+**/
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -9,12 +13,9 @@
 using namespace std;
  
 int main(){
-    int N,A,B;
-    cin >> N >> A >> B;
-    if(N * A <  B){
-        cout << N * A << endl;
-    }
-    else {
-        cout <<  B << endl;
-    }
+    long long N; 
+    cin >> N;
+    long long n = N-1;
+
+    cout << (n * (n+1)) / 2  <<endl;
 }

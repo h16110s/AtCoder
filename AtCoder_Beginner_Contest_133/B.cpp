@@ -1,7 +1,3 @@
-/**
-    A	Darker and Darker    	C++14 (GCC 5.4.1)
-    Accept
-**/
 #include <iostream>
 #include <cmath>
 #include <algorithm>
